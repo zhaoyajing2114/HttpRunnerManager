@@ -87,7 +87,7 @@ def customer_pager(base_url, current_page, total_page):
     return mark_safe(result)  # 把字符串转成html语言
 
 
-def get_pager_info(Model, filter_query, url, id, per_items=12):
+def get_pager_info(Model, filter_query, url, id, per_items=20):
     """
     筛选列表信息
     :param Model: Models实体类
