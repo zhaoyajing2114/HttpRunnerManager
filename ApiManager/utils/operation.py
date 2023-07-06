@@ -407,23 +407,6 @@ def copy_test_data(id, name):
     return 'ok'
 
 
-def edit_cookie(ids,new_cookie):
-    logging.error(new_cookie)
-    logging.error(ids)
-    for item in ids:
-        v = ids[item]
-        config_value = TestCaseInfo.objects.get(id=v)
-        req_value = config_value.request
-        req = eval(req_value)
-        try:
-            req['config']['request']['headers']['cookie'] = new_cookie
-            config_value.request = str(req)
-            config_value.save()
-        except:
-            return '操作异常，cookie不存在于header'
-    return 'ok'
-
-
 def copy_suite_data(id, name):
     """
     复制suite信息，默认插入到当前项目、莫夸

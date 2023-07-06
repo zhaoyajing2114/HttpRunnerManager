@@ -1,12 +1,12 @@
 import os
 
 from django.core.exceptions import ObjectDoesNotExist
-from httprunner import logger
+
 from ApiManager.models import TestCaseInfo, ModuleInfo, ProjectInfo, DebugTalk, TestSuite
 from ApiManager.utils.testcase import dump_python_file, dump_yaml_file
 
 
-def run_by_single(index, base_url, path, name_id=''):
+def run_by_single(index, base_url, path):
     """
     加载单个case用例信息
     :param index: int or str：用例索引
@@ -56,7 +56,6 @@ def run_by_single(index, base_url, path, name_id=''):
         os.mkdir(testcase_dir_path)
 
     for test_info in include:
-        logger.log_error(str(test_info))
         try:
             if isinstance(test_info, dict):
                 config_id = test_info.pop('config')[0]
@@ -75,30 +74,17 @@ def run_by_single(index, base_url, path, name_id=''):
     if request['test']['request']['url'] != '':
         testcase_list.append(request)
 
-    logger.log_error(str(testcase_dir_path))
-    dump_yaml_file(os.path.join(testcase_dir_path, str(name_id) + '_' + name + '.yml'), testcase_list)
-
+    dump_yaml_file(os.path.join(testcase_dir_path, name + '.yml'), testcase_list)
 
 
 def run_by_suite(index, base_url, path):
     obj = TestSuite.objects.get(id=index)
 
     include = eval(obj.include)
-    logger.log_error('suite_test')
-    logger.log_error(str(include))
-    id = 0
-    for val in include:
-        id += 1
-        logger.log_error(str(val))
-        idStr = ''
-        if id < 10:
-            idStr = 'a00' + str(id)
-        elif id < 100:
-            idStr = 'a0' + str(id)
-        else:
-            idStr = 'a' + str(id)
 
-        run_by_single(val[0], base_url, path, idStr)
+    for val in include:
+        run_by_single(val[0], base_url, path)
+
 
 
 def run_by_batch(test_list, base_url, path, type=None, mode=False):
