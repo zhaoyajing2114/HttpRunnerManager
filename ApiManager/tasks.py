@@ -131,7 +131,7 @@ def suite_hrun(name, base_url, suite, receiver):
 
     runner.run(testcase_dir_path)
 
-    shutil.rmtree(testcase_dir_path)
+    # shutil.rmtree(testcase_dir_path)
 
     runner.summary = timestamp_to_datetime(runner.summary)
     report_path = add_test_reports(runner, report_name=name)
