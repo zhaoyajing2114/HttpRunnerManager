@@ -235,26 +235,5 @@
         $().ready(function () {
             auto_load('#pro_filter', '/api/add_case/', '#module', 'module');
         });
-
-
-        function edit_cookie() {
-            if ($("input:checked").size() == 0) {
-                myAlert("请至少选择一条用例运行！");
-            } else {
-                $('#my-cookie').modal({
-                    relatedTarget: this,
-                    onConfirm: function () {
-                        var data = $("#test_list").serializeJSON();
-                        var new1 = $('#cookie_value').val();
-                        edit_cookie_ajax('/api/config_list/1/', data,new1)
-                    },
-                    onCancel: function () {
-                    }
-                    }
-                );
-            }
-        }
-
-
     </script>
 {% endblock %}
